@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prediction Model</title>
+    <link rel="stylesheet" href="styles.css"> <!-- 引入CSS文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4080FF',
+                        secondary: '#916BBF',
+                        tertiary: '#00C4C4',
+                        neutral: '#86909C',
+                        light: '#F2F3F5',
+                        dark: '#1D2129',
+                        darker: '#141414',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+
+        <!-- 侧边导航栏 -->
+    <div class="sidebar">
+        <button class="nav-btn active" id="homeBtn">HOME</button>
+        <button class="nav-btn" id="detailBtn">DETAIL</button>
+        <button class="nav-btn" id="atBtn">A&T</button> <!-- 新增导航按钮 -->
+    </div>
+            <!-- HOME页面内容 -->
+        <!-- HOME页面内容 -->
+<!-- HOME页面内容（替换index.html中的#homeContent） -->
+        <!-- 内容容器，包含所有页面 -->
+    <div class="content-holder">
+        <header>
+            <h1>WEBSITE DEMO</h1>
+        </header>
+<div id="homeContent" class="page-content">
+    <h3>Research Analysis: <span id="queryTitle"></span></h3>
+
+    <!-- 时间区间和类型选择器 -->
+    <div class="control-bar">
+        <select id="time-period-selector">
+            <option value="2015-2019">2015-2019</option>
+            <option value="2020-2024" selected>2020-2024</option>
+            <option value="2025">2025</option>
+        </select>
+        <select id="type-selector">
+            <option value="independent">Independent</option>
+            <option value="dependent">Dependent</option>
+            <option value="mediator">Mediator</option>
+            <option value="control">Control Variable</option>
+            <option value="moderator">Moderator Variable</option>
+        </select>
+    </div>
+
+    <!-- 图表容器 -->
+    <div id="originalCharts" class="content-wrapper">
+        <div class="chart-box">
+            <h4>Variable Trend by Period</h4>
+            <div id="variable-bar-chart" class="chart-container"></div>
+        </div>
+        <div class="chart-box">
+            <h4>Theoretical Frameworks by Period</h4>
+            <div id="theory-bar-chart" class="chart-container"></div>
+        </div>
+        <div class="chart-box">
+            <h4>Variable Type Distribution</h4>
+            <div id="type-pie-chart" class="chart-container"></div>
+        </div>
+        <div class="chart-box">
+            <h4>Research Methods Used</h4>
+            <table id="methods-table" class="table"></table>
+        </div>
+    </div>
+
+    <!-- 关系图容器 -->
+    <div id="relationshipChart" class="content-wrapper">
+        <div class="bg-dark rounded-xl shadow-lg p-4 md:p-6">
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-3/4">
+                    <div class="bg-darker rounded-lg p-2 md:p-4 h-[600px] relative">
+                        <div id="mainChart" class="w-full h-full"></div>
+                        <div id="tooltip" class="tooltip-card hidden absolute z-50"></div>
+                        <div id="errorMessage" class="hidden absolute inset-0 flex items-center justify-center bg-darker/90 text-red-400">
+                            <div class="text-center">
+                                <i class="fa fa-exclamation-triangle text-4xl mb-4"></i>
+                                <p>Failed to load data. Please try again later.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/4">
+                    <div class="bg-darker rounded-lg p-4 h-full">
+                        <h2 class="text-xl font-semibold mb-4 flex items-center">
+                            <i class="fa fa-info-circle text-primary mr-2"></i>Legend
+                        </h2>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 rounded-full bg-primary mr-3"></div>
+                                <span class="text-sm">Variable Pair</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 rounded-full bg-secondary mr-3"></div>
+                                <span class="text-sm">Mediating Variable</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 rounded-full bg-tertiary mr-3"></div>
+                                <span class="text-sm">Moderating Variable</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-0.5 bg-primary/50 mr-3"></div>
+                                <span class="text-sm">Direct Relationship</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-0.5 bg-secondary/50 mr-3"></div>
+                                <span class="text-sm">Mediating Relationship</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-0.5 bg-tertiary/50 mr-3"></div>
+                                <span class="text-sm">Moderating Relationship</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <h3 class="text-lg font-medium mb-3 flex items-center">
+                                <i class="fa fa-lightbulb-o text-primary mr-2"></i>Interaction Guide
+                            </h3>
+                            <ul class="text-sm space-y-2 text-neutral">
+                                <li class="flex items-start">
+                                    <i class="fa fa-mouse-pointer mt-1 mr-2"></i>
+                                    <span>Hover over nodes to view detailed information</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-arrows mt-1 mr-2"></i>
+                                    <span>Drag nodes to rearrange the layout</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-search-plus mt-1 mr-2"></i>
+                                    <span>Use mouse wheel to zoom in/out</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-hand-paper-o mt-1 mr-2"></i>
+                                    <span>Click and drag empty area to pan</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 箭头按钮 -->
+    <div class="arrow-buttons">
+        <button id="prevChartBtn" class="control-btn"><i class="fa fa-arrow-left"></i></button>
+        <button id="nextChartBtn" class="control-btn"><i class="fa fa-arrow-right"></i></button>
+    </div>
+</div>
+
+    <!-- DETAIL页面内容 -->
+        <div class="page-content" id="detailContent">
+            <div class="detail-content">
+                <!-- 左侧面板 - 包含查询历史和论文列表 -->
+                <div class="left-panel">
+                    <!-- 添加查询历史容器（关键修复） -->
+                    <div class="keyword-list" id="keywordList"></div>
+                    <div class="paper-list" id="paperList">
+                        <!-- 论文列表将在这里动态生成 -->
+                    </div>
+                </div>
+                <div class="data-display" id="dataDisplay">
+                    <p>Select a paper to view details</p>
+                </div>
+            </div>
+        </div>
+        <!-- A&T页面内容 -->
+        <div class="page-content" id="atContent"> <!-- 新增内容区域 -->
+            <div class="detail-content">
+                <div class="left-panel">
+                    <div class="keyword-list" id="atKeywordList"></div>
+                    <div class="paper-list" id="atPaperList">
+                        <!-- 论文列表将在这里动态生成 -->
+                    </div>
+                </div>
+                <div class="data-display" id="atDataDisplay">
+                    <p>Select a keyword to view details</p>
+                </div>
+            </div>
+        </div>
+
+       <!-- 输入区域（固定底部，覆盖侧边栏右侧） -->
+        <div class="input-section" style="position: fixed; bottom: 0; left: 100px; right: 0;">
+            <div class="search-container">
+                <div class="search-box-container">
+                    <input type="text" id="keywordSearch" class="search-box" placeholder="Search existing keywords...">
+                    <div id="autocompleteResults" class="autocomplete-results" style="display: none;"></div>
+                </div>
+                <button id="searchButton" class="search-button">Search</button>
+            </div>
+            <div class="input-container">
+                <input type="text" id="userInput" class="input-box" placeholder="Enter your research question...">
+                <button id="enterButton" class="enter-btn">Enter</button>
+            </div>
+        </div>
+        </div>
+
+
+
+
+    </div>
+
+    <!-- 加载指示器 -->
+    <div class="loading" id="loadingIndicator">
+        <div class="spinner"></div>
+        <p>Processing your request...</p>
+    </div>
+    <script src="script.js"></script> <!-- 引入JavaScript文件 -->
+</body>
+</html>

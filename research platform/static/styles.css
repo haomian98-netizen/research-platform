@@ -1,0 +1,646 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+.page-content {
+    display: none;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-height: calc(100vh - 160px); /* 为输入区和头部留出空间 */
+}
+.page-content.active {
+    display: block;
+}
+.content-holder {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #000;
+}
+
+/* 侧边导航栏 */
+.sidebar {
+    width: 100px;
+    background-color: #111;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-btn {
+    width: 80px;
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #222;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.nav-btn.active {
+    background-color: #444;
+}
+
+.nav-btn:hover {
+    background-color: #333;
+}
+#relationshipChart .content-wrapper {
+  display: flex;
+  flex-direction: column; /* 垂直排列 */
+  gap: 1.5rem;
+  min-height: 800px; /* 设最小高度 */
+}
+/* 新增容器样式 */
+.content-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2列布局 */
+    grid-template-rows: repeat(2, 1fr); /* 2行布局 */
+    gap: 1.5rem;
+    height: calc(100vh - 200px); /* 减去头部和输入区域的高度 */
+    padding: 1rem;
+}
+/* 段落网格布局 */
+.paragraphs-grid {
+    flex: 0 0 50%;
+    max-width: 600px;
+    min-width: 400px;
+}
+#chartArea {
+    /* 右侧图表区占一半宽度 */
+    flex: 0 0 50%;
+    display: flex;
+    flex-direction: column; /* 图表上下排列 */
+    gap: 2rem;
+}
+/* 箭头按钮样式 */
+.arrow-buttons {
+    position: fixed;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 100;
+}
+
+.control-btn {
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.control-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+#relationshipChart .md:w-3/4 {
+    /* 原样式限制了主图表宽度，覆盖为全宽 */
+    max-width: 100% !important;
+    width: 100% !important;
+}
+/* 隐藏关系图容器 */
+#relationshipChart {
+    display: none;
+    height: calc(100vh - 200px);
+    padding: 1rem;
+}
+
+#relationshipChart .content-wrapper {
+    display: block;
+    height: 100%;
+}
+
+/* 关系图图例样式 */
+#relationshipChart .legend-item span,
+#relationshipChart .text-sm,
+#relationshipChart .text-neutral,
+#relationshipChart .text-lg,
+#relationshipChart .text-xl {
+    color: #fff !important;
+}
+
+#relationshipChart .tooltip-title,
+#relationshipChart .tooltip-item,
+#relationshipChart .tooltip-label {
+    color: #fff;
+}
+
+/* 确保图例文字颜色为白色 */
+#relationshipChart .space-y-4 span,
+#relationshipChart .space-y-2 span {
+    color: #fff !important;
+}
+
+/* 关系统计和研究方法分布的文字 */
+#relationshipChart #statisticsContainer p,
+#relationshipChart #methodsContainer p,
+#relationshipChart .data-note {
+    color: #fff; /* 统计信息和说明文字 */
+}
+
+/* 交互指南列表文字（确保列表项和子标题颜色正确） */
+#relationshipChart h3,
+#relationshipChart h4,
+#relationshipChart ul li {
+    color: #fff; /* 标题和列表项文字 */
+}
+
+/* 修复可能被图表库覆盖的颜色（如 ECharts 标签） */
+#relationshipChart .chart-container * {
+    color: inherit; /* 继承容器的白色，不影响图表本身（图表标签通常用 SVG，颜色独立） */
+}
+
+/* 表格文字（如果关系图内有表格的话，确保不影响外部表格） */
+#relationshipChart .table th,
+#relationshipChart .table td {
+    color: #fff; /* 关系图内的表格文字 */
+}
+
+/* 避免影响其他页面的 .text-neutral 类（仅关系图内生效） */
+#relationshipChart .text-neutral {
+    color: #fff !important; /* 强制覆盖该容器内的中性色文字 */
+}
+
+/* 新增地图容器（占剩余25%，约300px） */
+#mapContainer {
+    flex: 0 0 25%;
+    height: 100%;
+    min-width: 10px; /* 最小宽度防止挤压 */
+}
+.chart-item {
+    height: 400px; /* 每个图表固定高度 */
+    overflow: hidden;
+    border-radius: 12px;
+}
+/* 地图样式 */
+.map-item {
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.chart-wrapper {
+    display: flex;
+    gap: 2rem;
+    padding: 20px;
+    min-height: 600px;
+    overflow-y: auto;
+}
+
+.chart-box {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-box h4 {
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.chart-container {
+    flex: 1;
+    min-height: 0; /* 允许容器收缩 */
+}
+
+#methods-table {
+    height: 100%;
+    overflow-y: auto;
+}
+
+#methods-table th,
+#methods-table td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid #333;
+    color: #fff;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+.table th, .table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+}
+
+.table tr:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.data-note {
+    border-top: 1px solid #333;
+    padding-top: 15px;
+}
+
+.chartContainer {
+height: 400px !important;
+    flex: 1;
+    min-width: 300px;
+
+     /* 或根据需求设置固定高度 */
+}
+
+/* 段落卡片 */
+.paragraph-card {
+    background: #2d2d2d;
+    border-radius: 8px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #404040;
+    display: block; /* 块级元素 */
+    width: 100%; /* 卡片宽度为父容器的100% */
+    box-sizing: border-box; /* 使内边距和边框不影响宽度 */
+}
+
+.paragraph-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    border-color: #666;
+}
+#homeContent {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: auto;
+}
+/* 摘要文字样式 */
+.paragraph-summary {
+    color: #fff;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* 模态窗口 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+    background: #1a1a1a;
+    margin: 15% auto;
+    padding: 2rem;
+    width: 70%;
+    border-radius: 8px;
+}
+
+/* 主内容区 */
+.main-content {
+    display: flex;
+    flex: 1;
+}
+
+header {
+    background-color: #1a1a1a;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+/* 子标题统一颜色 */
+#homeContent h3,
+.detail-content h3,
+.at-content h3 {
+    color: #f5f5f5; /* 米白色，比纯白柔和 */
+    border-bottom: 1px solid #444; /* 底边分隔线 */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+h1 {
+    margin: 0;
+    color: #fff; /* 标题用纯白，高对比 */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2); /* 轻微投影，增强立体感 */
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
+
+/* 结果展示区 */
+.result-section {
+    flex: 1;
+
+    overflow-y: auto;
+}
+
+/* DETAIL页面布局 */
+.detail-container {
+    display: none;
+    height: 100%;
+}
+
+.detail-content {
+    display: grid;
+    grid-template-columns: 30% 70%; /* 左30%右70% */
+    gap: 1.5rem;
+    height: 100%;
+}
+/* 左侧面板 - 包含查询历史和论文列表 */
+.left-panel {
+    background: #252525;
+    border-radius: 12px;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+.left-panel h3,
+.data-display h3,
+.keyword-item h4,
+.paper-entry h4 {
+    color: #fff; /* 标题纯白 */
+}
+.keyword-item p,
+.data-display p,
+.at-data-display p {
+    color: #fff; /* 段落浅灰，比原#999更亮，避免与背景混合 */
+    line-height: 1.6; /* 增加行高，提升阅读体验 */
+}
+
+.paper-entry h4,
+.chart-box h4,
+.data-display h4,
+.at-data-display h4 {
+    color: #f5f5f5 !important; /* 米白色（#f5f5f5），!important 覆盖历史绿色 */
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+#mainChart {
+    width: 100%;
+    height: 100%;
+}
+.keyword-list {
+    padding: 15px;
+    overflow-y: auto;
+    border-bottom: 1px solid #333;
+}
+.paper-list {
+    padding: 15px;
+    overflow-y: auto;
+    flex: 1;
+}
+.data-display {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.keyword-item {
+    padding: 12px;
+    margin: 8px 0;
+    background-color: #222;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.keyword-item:hover {
+    background-color: #333;
+}
+.keyword-item h4, .paper-item h4 {
+    margin-top: 0;
+    color: #4CAF50;
+}
+/* 摘要和详细内容样式 */
+.abstract {
+    background-color: #222;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 15px 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.data-content {
+    padding: 10px;
+}
+/* 输入区域 */
+.input-section {
+    background: #111;
+    padding: 20px;
+    border-top: 1px solid #333;
+    position: fixed;
+    left: 100px; /* 避开侧边栏宽度 */
+    right: 0;
+    bottom: 0;
+    box-sizing: border-box;
+}
+
+.input-box {
+    flex: 1;
+    padding: 15px;
+    font-size: 1rem;
+    background-color: #222;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-box:focus {
+    border-color: #fff;
+}
+
+/* 按钮样式 */
+.enter-btn, .action-btn {
+    padding: 15px 25px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.enter-btn:hover, .action-btn:hover {
+    background-color: #45a049;
+}
+
+.actions {
+    margin-top: 20px;
+}
+
+/* 加载指示器 */
+.loading {
+    display: none;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 3px solid #fff;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+/* 错误提示 */
+.error {
+    color: #ff5555;
+}
+/* 响应式设计 */
+@media (max-width:1024px) {
+#relationshipChart .content-wrapper {
+        grid-template-columns: 1fr; /* 小屏幕下单列布局 */
+        gap: 1.5rem;
+    }
+    #mainChart {
+        height: 600px !important; /* 适配小屏幕高度 */
+    }
+        .content-wrapper {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    #chartArea, #mapContainer {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+    .paragraphs-grid {
+        margin-right: 0;
+        max-width: none;
+    }
+    .detail-content {
+        flex-direction: column;
+
+    }
+    .left-panel, .data-display {
+        width: 100%;
+        border-right: none;
+    }
+    .keyword-list {
+        border-bottom: 1px solid #333;
+    }
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 搜索容器样式 */
+.search-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.search-box-container {
+    position: relative;
+    flex: 1;
+}
+
+.search-box {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    color: #333;
+}
+
+.search-box:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+.search-button {
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+.autocomplete-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 5px;
+}
+
+.autocomplete-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid #eee;
+}
+
+.autocomplete-item:last-child {
+    border-bottom: none;
+}
+
+.autocomplete-item:hover {
+    background-color: #f5f5f5;
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.input-box {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    color: #333;
+}
+
+.enter-btn {
+    padding: 12px 24px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.enter-btn:hover {
+    background-color: #218838;
+}
